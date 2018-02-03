@@ -1,0 +1,34 @@
+{
+    "cap_add": [],
+    "cap_drop": [],
+    "cmd": "",
+    "cpu_priority": 0,
+    "ddsm_bind_share": "",
+    "devices": [],
+    "enable_publish_all_ports": false,
+    "enable_restart_policy": false,
+    "enabled": false,
+    "env_variables": [],
+    "exporting": false,
+    "id": "f070b40888ad475f9e6a0d3d3d162459d4e55686e4d79564c9981c530f9df66e",
+    "image": "homeassistant/home-assistant:latest",
+    "is_ddsm": false,
+    "is_package": false,
+    "links": [],
+    "memory_limit": 0,
+    "name": "home-assistant",
+    "network": [],
+    "port_bindings": [],
+    "privileged": false,
+    "shortcut": {
+        "enable_shortcut": true,
+        "enable_status_page": true,
+        "enable_web_page": false
+    },
+    "use_host_network": true,
+    "volume_bindings": [{
+        "host_volume_file": "/docker/home-assistant/config",
+        "mount_point": "/config",
+        "type": "rw"
+    }]
+}

@@ -1,0 +1,143 @@
+homeassistant:
+  name: Home
+  latitude: !secret home_latitude
+  longitude: !secret home_longitude
+  elevation: 0
+  unit_system: metric
+  time_zone: Europe/Amsterdam
+
+  customize: !include customize.yaml
+
+# Floorplan
+panel_custom: !include panel_custom.yaml
+binary_sensor: !include binary_sensors.yaml
+
+# Show links to resources in log and frontend
+#introduction:
+
+# Enables the frontend
+frontend:
+
+# Enables configuration UI
+config:
+
+http:
+
+updater:
+
+logger:
+  default: info
+  logs:
+    homeassistant.components.mqtt: debug
+    homeassistant.components.mysensors: debug
+    
+mqtt:
+  broker: !secret mqtt_broker
+  port: 1883
+  client_id: bitmonster_hass
+  keepalive: 60
+  #username: !secret mqtt_username
+  #password: !secret mqtt_password
+  protocol: 3.1
+  birth_message:
+    topic: 'tele/bitmonster_hass/LWT'
+    payload: 'online'
+    qos: 1
+    retain: true
+  will_message:
+    topic: 'tele/bitmonster_hass/LWT'
+    payload: 'offline'
+    qos: 1
+    retain: true
+
+mysensors:
+  gateways:
+    - device: mqtt
+      persistence_file: '/config/mysensors.json'         
+      topic_in_prefix: 'mysensors-gateway-out'
+      topic_out_prefix: 'mysensors-gateway-in'
+  optimistic: false
+  persistence: true
+  retain: true
+  version: 2.0
+
+
+# Discover some devices automatically
+discovery:
+  ignore:
+    - axis
+
+# Allows you to issue voice commands from the frontend in enabled browsers
+conversation:
+
+recorder:
+  db_url: !secret postgresql_uri
+  # purge_keep_days: 120
+
+# Enables support for tracking state changes over time.
+history:
+
+# View all events in a logbook
+logbook:
+
+# Track the sun
+sun:
+
+sensor: !include sensors.yaml
+switch: !include switches.yaml
+
+
+weather:
+  - platform: buienradar
+# Text to speech
+tts:
+  platform: google
+
+device_tracker:
+  - platform: nmap_tracker
+    hosts: 192.168.192.100-250
+    consider_home: 300
+    interval_seconds: 120
+    track_new_devices: true
+    scan_options: " --privileged -sP --host-timeout 10s "
+#  - platform: tplink
+#    track_new_devices: true
+#    consider_home: 300
+#    interval_seconds: 30
+#    host: 0.0.0.0
+#    username: xxxxx 
+#    password: xxxxx
+
+
+#group: !include groups.yaml
+
+automation: !include automations.yaml
+
+telegram_bot:
+  - platform: polling
+    api_key: !secret telegram_api_key
+    allowed_chat_ids:
+      - !secret telegram_chat_id
+
+notify:
+  - name: notify_telegram
+    platform: telegram
+    chat_id: !secret telegram_chat_id
+
+axis:
+  axis_m1004:
+    host: !secret axis_host
+    include:
+      - camera
+      # - motion
+    location: "Kantoor"
+    username: !secret axis_username
+    password: !secret axis_password
+    trigger_time: 50
+
+xiaomi_aqara:
+  discovery_retry: 10
+  gateways:
+    - mac: !secret xiaomi_aqara_mac
+      key: !secret xiaomi_aqara_key
+      host: !secret xiaomi_aqara_host

@@ -1,0 +1,10 @@
+- action:
+  - alias: Notify Nage through telegram
+    data:
+      message: 'Home Assistant: Jan-Age/Ilse is weg/thuis!'
+    service: notify.telegram
+  alias: Testing 123
+  id: '1504530247675'
+  trigger:
+  - entity_id: device_tracker.nages_oneplus, device_tracker.ilses_htc
+    platform: state

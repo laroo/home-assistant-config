@@ -1,0 +1,38 @@
+  - platform: random
+  - platform: buienradar
+    monitored_conditions:
+      - symbol
+      - humidity
+      - temperature
+      - windspeed
+      - pressure
+  - platform: template
+    sensors:
+      nages_oneplus:
+        value_template: '{% if is_state("device_tracker.nages_oneplus", "home") %}Thuis{% else %}Niet thuis{% endif %}'
+      ilses_htc:
+        value_template: '{% if is_state("device_tracker.ilses_htc", "home") %}Thuis{% else %}Niet thuis{% endif %}'
+  - platform: nut
+    name: Bitmonster UPS
+    host: !secret nas_host
+    port: 3493
+    alias: bitmonster_ups
+    resources:
+      - battery.charge
+      - battery.temperature
+      - input.voltage
+      - ups.load
+
+  - platform: synologydsm
+    host: !secret nas_host
+    port: 5000
+    username: !secret nas_username
+    password: !secret nas_password
+    monitored_conditions:
+      - cpu_total_load
+      - memory_real_usage
+      - network_up
+      - network_down
+      - disk_smart_status
+      - disk_temp
+      - volume_percentage_used

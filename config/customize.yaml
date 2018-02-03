@@ -1,0 +1,8 @@
+    binary_sensor.floorplan:
+      custom_ui_state_card: floorplan
+      config: !include floorplan.yaml
+    sensor.nages_oneplus:
+      entity_picture: https://secure.gravatar.com/avatar/dc53ea13bbad5de0cbc420943eca7280
+      friendly_name: Nage's OnePlus
+    sensor.ilses_htc:
+      friendly_name: Ilse's HTC

@@ -1,0 +1,14 @@
+language: python
+python:
+  - "3.6"
+notifications:
+  email:
+    on_success: change
+    on_failure: always
+
+before_install:
+  - mv secrets_redacted.yaml secrets.yaml
+install:
+  - pip3 install homeassistant==0.62.1
+script:
+  - hass -c config --script check_config
