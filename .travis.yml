@@ -7,7 +7,7 @@ notifications:
     on_failure: always
 
 before_install:
-  - mv secrets_redacted.yaml secrets.yaml
+  - mv config/secrets_redacted.yaml config/secrets.yaml
 install:
   - pip3 install homeassistant==0.62.1
 script:
